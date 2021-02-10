@@ -8,7 +8,6 @@ pytest = "*"
 
 [packages]
 python-telegram-bot = "*"
-pytest = "*"
 python-dotenv = "*"
 
 [requires]
