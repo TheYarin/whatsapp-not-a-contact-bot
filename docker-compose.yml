@@ -8,4 +8,4 @@ services:
     volumes:
       - ${PWD}/logs:/app/logs
     environment:
-      - LOGS_FOLDER: /app/logs
+      LOGS_FOLDER: /app/logs
