@@ -1,3 +1,4 @@
+import os
 from typing import Optional
 
 import logging
@@ -7,13 +8,13 @@ import re
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from settings import TELEGRAM_BOT_TOKEN
+from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
 
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        RotatingFileHandler("log.txt", maxBytes=100 * 1024**2, backupCount=2), # 200MB
+        RotatingFileHandler(os.path.join(LOGS_FOLDER, "log.txt"), maxBytes=100 * 1024**2, backupCount=2), # 200MB
         logging.StreamHandler()
     ]
 )

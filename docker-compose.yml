@@ -4,6 +4,8 @@ services:
   server:
     image: whatsapp-not-a-contact-bot
     build: .
-    volumes:
-      - ${PWD}/log.txt:/app/log.txt
     restart: always
+    volumes:
+      - ${PWD}/logs:/app/logs
+    environment:
+      - LOGS_FOLDER: /app/logs
