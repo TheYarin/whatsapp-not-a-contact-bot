@@ -5,5 +5,5 @@ services:
     image: whatsapp-not-a-contact-bot
     build: .
     volumes:
-      - /services/whatsapp-not-a-contact-bot/log.txt:/app/log.txt
+      - ${PWD}/log.txt:/app/log.txt
     restart: always
