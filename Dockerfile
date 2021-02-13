@@ -21,7 +21,7 @@ RUN pip install pipenv
 COPY Pipfile* /app/
 RUN pipenv install --deploy --ignore-pipfile
 
-COPY . /app
+COPY /src /app
 
 # During debugging, this entry point will be overridden. For more information, please refer to https://aka.ms/vscode-docker-python-debug
 CMD ["pipenv", "run", "python", "./whatsapp_not_a_contact_bot.py"]
