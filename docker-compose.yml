@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  server:
+    image: whatsapp-not-a-contact-bot
+    build: .
+    volumes:
+      - /services/whatsapp-not-a-contact-bot/log.txt:/app/log.txt
+    restart: always
