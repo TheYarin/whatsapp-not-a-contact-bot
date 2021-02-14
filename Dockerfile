@@ -16,6 +16,7 @@ USER appuser
 ENV PATH=${PATH}:/home/appuser/.local/bin
 
 # Creating the logs folder in advance because if we let the volume mounting do it, it will be owned by the "root" user and appuser won't have permission to access it.
+# This is done here and not, say, right after "WORKDIR /app" because only after "USER appuser" I was able to get the folder created under the correct user & group.
 RUN mkdir /app/logs
 
 # Install dependencies
