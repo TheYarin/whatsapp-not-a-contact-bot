@@ -11,13 +11,11 @@ WORKDIR /app
 
 # Switching to a non-root user, please refer to https://aka.ms/vscode-docker-python-user-rights
 RUN mkdir /home/appuser
-RUN useradd appuser && chown -R appuser /app /home/appuser
+# Specific uid (user id) and gid (group id) are used because the docker host will need to allow those to access the logs folder later on using `setfacl -m u:555:rwx <path-to-logs-folder>`
+RUN groupadd -g 556 appuser && \
+    useradd -r -u 555 -g appuser appuser && chown -R appuser /app /home/appuser
 USER appuser
 ENV PATH=${PATH}:/home/appuser/.local/bin
-
-# Creating the logs folder in advance because if we let the volume mounting do it, it will be owned by the "root" user and appuser won't have permission to access it.
-# This is done here and not, say, right after "WORKDIR /app" because only after "USER appuser" I was able to get the folder created under the correct user & group.
-RUN mkdir /app/logs
 
 # Install dependencies
 RUN pip install pipenv
