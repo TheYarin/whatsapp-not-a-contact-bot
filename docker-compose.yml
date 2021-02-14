@@ -7,4 +7,6 @@ services:
     restart: always
     volumes:
       - ${PWD}/logs:/app/logs
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
     env_file: prod.env
