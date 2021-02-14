@@ -7,5 +7,4 @@ services:
     restart: always
     volumes:
       - ${PWD}/logs:/app/logs
-    environment:
-      LOGS_FOLDER: /app/logs
+    env_file: prod.env

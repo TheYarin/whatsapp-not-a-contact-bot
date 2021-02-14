@@ -15,6 +15,9 @@ RUN useradd appuser && chown -R appuser /app /home/appuser
 USER appuser
 ENV PATH=${PATH}:/home/appuser/.local/bin
 
+# Creating the logs folder in advance because if we let the volume mounting do it, it will be owned by the "root" user and appuser won't have permission to access it.
+RUN mkdir /app/logs
+
 # Install dependencies
 RUN pip install pipenv
 COPY --chown=appuser Pipfile* /app/

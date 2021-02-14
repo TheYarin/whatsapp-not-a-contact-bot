@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-
 def get_env_var_yell_if_missing(key: str) -> str:
     value = os.getenv(key)
 
@@ -14,4 +13,4 @@ def get_env_var_yell_if_missing(key: str) -> str:
 
 
 TELEGRAM_BOT_TOKEN = get_env_var_yell_if_missing("TELEGRAM_BOT_TOKEN")
-LOGS_FOLDER = get_env_var_yell_if_missing("LOGS_FOLDER")
+LOGS_FOLDER = './logs'
