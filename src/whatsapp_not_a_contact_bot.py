@@ -1,14 +1,13 @@
 import os
-from typing import Optional
 
 import logging
 from logging.handlers import RotatingFileHandler
-import re
 
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
+from .settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
+from .phone_number_formatting import format_phone_number
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,26 +19,6 @@ logging.basicConfig(
 )
 
 logger = logging.getLogger(__name__)
-
-def format_phone_number(text: str) -> Optional[str]:
-    phone_regex = re.compile('^\+?[\d-]{1,15}$')
-    
-    if not phone_regex.match(text):
-        return None
-
-    tmp = text
-
-    if text.startswith('+'):
-        tmp = re.sub('(^\+\d{1,3}-)0', '\g<1>', tmp)
-    else:
-        tmp = ('972' + tmp[1:]) if tmp.startswith('0') else tmp
-    
-    formatted_phone_number = re.sub('[^\d]', '', tmp) # 972508872700
-
-    if formatted_phone_number == '':
-        return None
-
-    return formatted_phone_number
 
 def get_user_info(update: Update) -> str:
     user = update.message.from_user
