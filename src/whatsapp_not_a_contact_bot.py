@@ -6,8 +6,8 @@ from logging.handlers import RotatingFileHandler
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from .settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
-from .phone_number_formatting import format_phone_number
+from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
+from phone_number_formatting import format_phone_number
 
 logging.basicConfig(
     level=logging.INFO,
