@@ -1,4 +1,4 @@
-from src.phone_number_formatting import format_phone_number
+from src.helpers import format_phone_number
 
 def test_invalid_phone_number_1():
     assert format_phone_number('+972-50-123456789') == None
