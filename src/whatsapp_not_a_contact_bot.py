@@ -6,7 +6,7 @@ from logging.handlers import RotatingFileHandler
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
-from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
+from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER, LOG_CHAT_ID
 from helpers import format_phone_number, trim_with_message_if_too_long
 
 logging.basicConfig(
@@ -28,11 +28,19 @@ def get_user_info(update: Update) -> str:
 
     return f'user_id: {user_id}, username: "{username}", full name: "{full_name}"'
 
+def log_info_and_send_to_log_chat(message: str, context: CallbackContext) -> None:
+    logger.info(message)
+    context.bot.send_message(chat_id=LOG_CHAT_ID, text=message)
+
+
 def handle_potential_number_message(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
     formatted_phone_number = format_phone_number(update.message.text)
     
-    logger.info(f"Received the following from {get_user_info(update)}:\n{trim_with_message_if_too_long(update.message.text)}/nFormatted to: {formatted_phone_number}")
+    log_info_and_send_to_log_chat(
+f"""Received the following from {get_user_info(update)}:
+{trim_with_message_if_too_long(update.message.text)}
+Formatted to: {formatted_phone_number}""", context)
     
     if formatted_phone_number is None:
         update.message.reply_text("Bad format. Try something like +972-50-123-4567.")
@@ -42,7 +50,7 @@ def handle_potential_number_message(update: Update, context: CallbackContext) ->
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
-    logger.info(f"Started from {get_user_info(update)}")
+    log_info_and_send_to_log_chat(f"Started from {get_user_info(update)}", context)
     
     update.message.reply_text(
 """
