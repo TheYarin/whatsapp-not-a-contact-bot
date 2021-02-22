@@ -7,7 +7,7 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER
-from helpers import format_phone_number
+from helpers import format_phone_number, trim_with_message_if_too_long
 
 logging.basicConfig(
     level=logging.INFO,
@@ -32,11 +32,11 @@ def handle_potential_number_message(update: Update, context: CallbackContext) ->
     """Echo the user message."""
     formatted_phone_number = format_phone_number(update.message.text)
     
+    logger.info(f"Received the following from {get_user_info(update)}:\n{trim_with_message_if_too_long(update.message.text)}/nFormatted to: {formatted_phone_number}")
+    
     if formatted_phone_number is None:
-        logger.info(f"Received bad format from {get_user_info(update)}")
         update.message.reply_text("Bad format. Try something like +972-50-123-4567.")
     else:
-        logger.info(f"Received {formatted_phone_number} from {get_user_info(update)}")
         url = f'https://api.whatsapp.com/send/?phone={formatted_phone_number}'
         update.message.reply_text(url)
 

@@ -20,3 +20,7 @@ def format_phone_number(text: str) -> Optional[str]:
         return None
 
     return formatted_phone_number
+
+def trim_with_message_if_too_long(text: str, max_size: int = 200) -> str:
+    return text if len(text) <= max_size \
+           else text[:max_size] + f'\n<Trimmed. Original length: {len(text)}>'
