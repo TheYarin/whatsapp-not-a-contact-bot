@@ -58,6 +58,10 @@ Simply send me a phone number in almost any format, and I'll send you a WhatsApp
 If you send me a local number (without a country code), I'll assume you mean Israel and use 972.
 """)
 
+def ping(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text("pong")
+
+
 def main():
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
@@ -68,6 +72,7 @@ def main():
 
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
+    dispatcher.add_handler(CommandHandler("ping", ping))
     # dispatcher.add_handler(CommandHandler("help", help_command))
 
     # on noncommand i.e message - echo the message on Telegram
