@@ -1,13 +1,13 @@
 from typing import Optional
 import re
 
-def format_phone_number(text: str) -> Optional[str]:
-    phone_regex = re.compile(r'^\+?[\d-]{1,15}$')
-    
-    if not phone_regex.match(text):
-        return None
+phone_regex = re.compile(r'^\+?[\d-]{1,15}$')
 
-    tmp = text
+def format_phone_number(text: str) -> Optional[str]:
+    tmp = text.replace(' ', '')
+
+    if not phone_regex.match(tmp):
+        return None
 
     if text.startswith('+'):
         tmp = re.sub(r'(^\+\d{1,3}-)0', r'\g<1>', tmp)
