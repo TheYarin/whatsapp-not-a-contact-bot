@@ -61,6 +61,11 @@ If you send me a local number (without a country code), I'll assume you mean Isr
 def ping(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("pong")
 
+def thanks(update: Update, context: CallbackContext) -> None:
+    log_info_and_send_to_log_chat(f"{get_user_info(update)} says thank you!", context)
+    
+    update.message.reply_text("Awww, you're welcome!")
+
 
 def main():
     """Start the bot."""
@@ -73,6 +78,7 @@ def main():
     # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("ping", ping))
+    dispatcher.add_handler(CommandHandler("thanks", thanks))
     # dispatcher.add_handler(CommandHandler("help", help_command))
 
     # on noncommand i.e message - echo the message on Telegram
