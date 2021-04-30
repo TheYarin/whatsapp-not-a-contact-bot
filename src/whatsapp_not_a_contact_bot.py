@@ -62,6 +62,9 @@ If you send me a local number (without a country code), I'll assume you mean Isr
 def ping(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("pong")
 
+def create_suspense(context: CallbackContext) -> None:
+    context.bot.send_chat_action(context.job.context, action=ChatAction.TYPING)
+
 def send_youre_welcome(context: CallbackContext) -> None:
     context.bot.send_message(context.job.context, text="Awww, you're welcome!")
 
@@ -70,7 +73,8 @@ def thanks(update: Update, context: CallbackContext) -> None:
     
     update.message.reply_chat_action( action=ChatAction.TYPING)
     chat_id = update.message.chat_id
-    context.job_queue.run_once(send_youre_welcome, when=1.4, context=chat_id, name=str(chat_id))
+    context.job_queue.run_once(create_suspense, when=2, context=chat_id, name=str(chat_id))
+    context.job_queue.run_once(send_youre_welcome, when=3.4, context=chat_id, name=str(chat_id))
     
 
 
