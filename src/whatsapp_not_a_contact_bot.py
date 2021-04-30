@@ -1,13 +1,14 @@
-import os
-
 import logging
+import os
+from time import sleep
 from logging.handlers import RotatingFileHandler
 
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram import ChatAction, Update
+from telegram.ext import (CallbackContext, CommandHandler, Filters,
+                          MessageHandler, Updater)
 
-from settings import TELEGRAM_BOT_TOKEN, LOGS_FOLDER, LOG_CHAT_ID
 from helpers import format_phone_number, trim_with_message_if_too_long
+from settings import LOG_CHAT_ID, LOGS_FOLDER, TELEGRAM_BOT_TOKEN
 
 logging.basicConfig(
     level=logging.INFO,
@@ -61,10 +62,16 @@ If you send me a local number (without a country code), I'll assume you mean Isr
 def ping(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("pong")
 
+def send_youre_welcome(context: CallbackContext) -> None:
+    context.bot.send_message(context.job.context, text="Awww, you're welcome!")
+
 def thanks(update: Update, context: CallbackContext) -> None:
     log_info_and_send_to_log_chat(f"{get_user_info(update)} says thank you!", context)
     
-    update.message.reply_text("Awww, you're welcome!")
+    update.message.reply_chat_action( action=ChatAction.TYPING)
+    chat_id = update.message.chat_id
+    context.job_queue.run_once(send_youre_welcome, when=1.4, context=chat_id, name=str(chat_id))
+    
 
 
 def main():
