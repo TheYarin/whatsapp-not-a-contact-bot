@@ -71,7 +71,6 @@ def send_youre_welcome(context: CallbackContext) -> None:
 def thanks(update: Update, context: CallbackContext) -> None:
     log_info_and_send_to_log_chat(f"{get_user_info(update)} says thank you!", context)
     
-    update.message.reply_chat_action( action=ChatAction.TYPING)
     chat_id = update.message.chat_id
     context.job_queue.run_once(create_suspense, when=2, context=chat_id, name=str(chat_id))
     context.job_queue.run_once(send_youre_welcome, when=3.4, context=chat_id, name=str(chat_id))
