@@ -5,6 +5,7 @@ phone_regex = re.compile(r'^\+?[\d-]{1,15}$')
 
 def format_phone_number(text: str) -> Optional[str]:
     tmp = text.replace(' ', '')
+    tmp = tmp.replace('\u200e', '')
 
     if not phone_regex.match(tmp):
         return None

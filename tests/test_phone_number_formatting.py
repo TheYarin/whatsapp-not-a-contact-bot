@@ -65,3 +65,12 @@ def test_nozero_local_number():
 
 def test_international_number_containing_space():
     assert format_phone_number('972 52-123-4567') == '972521234567'
+
+def test_international_number_with_zero_at_the_start_of_the_country_code():
+    assert format_phone_number('+04912345678') == '04912345678' # Not sure this is the desired behavior, change if necessary
+
+def test_weird_number_that_caught_me_by_surprise():
+    assert format_phone_number('1800-123-456') == '1800123456'
+
+def test_annoying_invisible_character(): # That little bitch showed up a few times.
+    assert format_phone_number('\u200e0501234567') == '972501234567'
