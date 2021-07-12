@@ -74,3 +74,9 @@ def test_weird_number_that_caught_me_by_surprise():
 
 def test_annoying_invisible_character(): # That little bitch showed up a few times.
     assert format_phone_number('\u200e0501234567') == '972501234567'
+
+def test_annoying_invisible_character2(): # That little bitch showed up, too.
+    assert format_phone_number('\u200f0501234567') == '972501234567'
+
+def test_number_accompanied_by_junk():
+    assert format_phone_number('hello hello +972 50-1234567 oops I forgot some text here') == '972501234567'
