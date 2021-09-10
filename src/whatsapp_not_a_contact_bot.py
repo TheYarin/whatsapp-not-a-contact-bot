@@ -91,7 +91,7 @@ def main():
     dispatcher.add_handler(CommandHandler("thanks", thanks))
     # dispatcher.add_handler(CommandHandler("help", help_command))
 
-    # on noncommand i.e message - echo the message on Telegram
+    # on noncommand i.e message
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, handle_potential_number_message))
 
     # Start the Bot

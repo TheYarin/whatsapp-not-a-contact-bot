@@ -1,25 +1,25 @@
 from src.helpers import format_phone_number
 
 def test_invalid_phone_number_1():
-    assert format_phone_number('+972-50-123456789') == None
+    assert format_phone_number('+972-50-123456789') is None
 
 def test_invalid_phone_number_2():
-    assert format_phone_number("' and 1=1 --") == None
+    assert format_phone_number("' and 1=1 --") is None
 
 def test_invalid_phone_number_3():
-    assert format_phone_number('') == None
+    assert format_phone_number('') is None
 
 def test_invalid_phone_number_4():
-    assert format_phone_number('jibberish') == None
+    assert format_phone_number('jibberish') is None
 
 def test_invalid_phone_number_5():
-    assert format_phone_number('+972-50-1234567 +972-50-1234567') == None
+    assert format_phone_number('+972-50-1234567 +972-50-1234567') is None
 
 def test_invalid_phone_number_6():
-    assert format_phone_number('+972-50+1234567') == None
+    assert format_phone_number('+972-50+1234567') is None
 
 def test_invalid_phone_number_7():
-    assert format_phone_number('+---') == None
+    assert format_phone_number('+---') is None
 
 def test_invalid_phone_number_6_padding_supported():
     assert format_phone_number(' +972-50-1234567') == '972501234567'
@@ -49,13 +49,13 @@ def test_already_formatted_number():
     assert format_phone_number('972501234567') == '972501234567'
 
 def test_american_phone_number_1_unsupported():
-    assert format_phone_number('(213) 373-4253') == None
+    assert format_phone_number('(213) 373-4253') is None
 
 def test_american_phone_number_2_supported():
     assert format_phone_number('+1 213 373 4253') == '12133734253'
 
 def test_american_phone_number_3_unsupported():
-    assert format_phone_number('(213) 373-42-53 ext. 1234') == None
+    assert format_phone_number('(213) 373-42-53 ext. 1234') is None
 
 def test_short_number():
     assert format_phone_number('166') == '166' # I am not happy with this one, but I'm mentioning this case here for completeness
