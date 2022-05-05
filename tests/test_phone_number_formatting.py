@@ -80,3 +80,6 @@ def test_annoying_invisible_character2(): # That little bitch showed up, too.
 
 def test_number_accompanied_by_junk():
     assert format_phone_number('hello hello +972 50-1234567 oops I forgot some text here') == '972501234567'
+
+def test_international_number_starting_with_two_zeros():
+    assert format_phone_number('00357-12345678') == '35712345678'
