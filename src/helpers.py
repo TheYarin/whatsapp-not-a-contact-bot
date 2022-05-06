@@ -1,15 +1,25 @@
 from typing import Optional
 import re
 
-phone_regex = re.compile(r'^\+?[\d-]{1,15}$')
+phone_regex = re.compile(r'^\+?[()\d -]{1,18}$')
 
 def format_phone_number(text: str) -> Optional[str]:
-    tmp = text.replace(' ', '')
-    ALLOWED_CHARS_REGEX = r'+\d'
-    tmp = re.sub(f'^[^{ALLOWED_CHARS_REGEX}]+', '', tmp)
-    tmp = re.sub(f'[^{ALLOWED_CHARS_REGEX}]+$', '', tmp)
+    def trim_junk_before_and_after_phone_number(s: str) -> str:
+        tmp = s
+        junk_before_phone_number_regex = r'^[^\d]*?((?:\+|\()?\d)'
+        tmp = re.sub(junk_before_phone_number_regex, r'\g<1>', tmp)
+        junk_after_phone_number_regex = r'[^\d]+$'
+        tmp = re.sub(junk_after_phone_number_regex, '', tmp)
+
+        return tmp
+
+    tmp = trim_junk_before_and_after_phone_number(text)
 
     if not phone_regex.match(tmp):
+        return None
+
+    # Local american phone numbers ((213) 123-4567) are not supported
+    if tmp.startswith('('):
         return None
 
     # Remove zero from +XXX-0XXXXXXXXX
