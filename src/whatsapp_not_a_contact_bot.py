@@ -1,6 +1,5 @@
 import logging
 import os
-from time import sleep
 from logging.handlers import RotatingFileHandler
 
 from telegram import ChatAction, Update
@@ -38,8 +37,9 @@ def handle_potential_number_message(update: Update, context: CallbackContext) ->
     """Echo the user message."""
     formatted_phone_number = format_phone_number(update.message.text)
     
+    user_info = get_user_info(update)
     log_info_and_send_to_log_chat(
-f"""Received the following from {get_user_info(update)}:
+f"""Received the following from {user_info}:
 {trim_with_message_if_too_long(update.message.text)}
 Formatted to: {formatted_phone_number}""", context)
     
