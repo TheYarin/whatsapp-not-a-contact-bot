@@ -13,3 +13,4 @@ def get_env_var_yell_if_missing(key: str) -> str:
 TELEGRAM_BOT_TOKEN = get_env_var_yell_if_missing("TELEGRAM_BOT_TOKEN")
 LOGS_FOLDER = './logs'
 LOG_CHAT_ID = int(get_env_var_yell_if_missing("LOG_CHAT_ID"))
+BELOVED_USER_ID = int(get_env_var_yell_if_missing("BELOVED_USER_ID"))

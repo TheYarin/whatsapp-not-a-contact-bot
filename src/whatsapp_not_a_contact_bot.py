@@ -8,7 +8,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
 from helpers import format_phone_number, trim_with_message_if_too_long
-from settings import LOG_CHAT_ID, LOGS_FOLDER, TELEGRAM_BOT_TOKEN
+from settings import BELOVED_USER_ID, LOG_CHAT_ID, LOGS_FOLDER, TELEGRAM_BOT_TOKEN
 
 logging.basicConfig(
     level=logging.INFO,
@@ -48,6 +48,9 @@ Formatted to: {formatted_phone_number}""", context)
     else:
         url = f'https://api.whatsapp.com/send/?phone={formatted_phone_number}'
         update.message.reply_text(url)
+
+        if update.message.from_user.id == BELOVED_USER_ID:
+            update.message.reply_text('❤')
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
