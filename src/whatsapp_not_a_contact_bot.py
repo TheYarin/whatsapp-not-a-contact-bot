@@ -39,7 +39,7 @@ def handle_potential_number_message(update: Update, context: CallbackContext) ->
     
     user_info = get_user_info(update)
     log_info_and_send_to_log_chat(
-f"""Received the following from {user_info}:
+f"""Received the following from {user_info}{" ❤" if update.message.from_user.id == BELOVED_USER_ID else ""}:
 {trim_with_message_if_too_long(update.message.text)}
 Formatted to: {formatted_phone_number}""", context)
     
