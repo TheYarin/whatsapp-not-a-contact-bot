@@ -81,6 +81,9 @@ def test_annoying_invisible_character(): # That little bitch showed up a few tim
 def test_annoying_invisible_character2(): # That little bitch showed up, too.
     assert format_phone_number('\u200f0501234567') == '972501234567'
 
+def test_annoying_funky_unicode_characters(): # These bitches showed up, too.
+    assert format_phone_number('+972\u00a050\u2011123\u20114567') == '972501234567' # +972 50‑123‑4567
+
 def test_number_accompanied_by_junk():
     assert format_phone_number('hello hello +972 50-1234567 oops I forgot some text here') == '972501234567'
 

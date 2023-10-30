@@ -15,6 +15,10 @@ def format_phone_number(text: str) -> Optional[str]:
 
     tmp = trim_junk_before_and_after_phone_number(text)
 
+    # Replace funky unicode characters with their normal counterparts
+    tmp = tmp.replace(' ', ' ')
+    tmp = tmp.replace('‑', '-')
+
     if not phone_regex.match(tmp):
         return None
 
