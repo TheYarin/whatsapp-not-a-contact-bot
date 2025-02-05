@@ -7,7 +7,7 @@ from telegram.ext import (CallbackContext, CommandHandler, Filters,
                           MessageHandler, Updater)
 
 from helpers import format_phone_number, trim_with_message_if_too_long
-from settings import BELOVED_USER_ID, LOG_CHAT_ID, LOGS_FOLDER, TELEGRAM_BOT_TOKEN
+from settings import BELOVED_USER_ID, PAST_BELOVED_USER_IDS, LOG_CHAT_ID, LOGS_FOLDER, TELEGRAM_BOT_TOKEN
 
 logging.basicConfig(
     level=logging.INFO,
@@ -39,7 +39,7 @@ def handle_potential_number_message(update: Update, context: CallbackContext) ->
     
     user_info = get_user_info(update)
     log_info_and_send_to_log_chat(
-f"""Received the following from {user_info}{" ❤" if update.message.from_user.id == BELOVED_USER_ID else ""}:
+f"""Received the following from {user_info}{" ❤" if update.message.from_user.id == BELOVED_USER_ID else " 🤍" if update.message.from_user.id in PAST_BELOVED_USER_IDS else ""}:
 {trim_with_message_if_too_long(update.message.text)}
 Formatted to: {formatted_phone_number}""", context)
     
@@ -51,6 +51,9 @@ Formatted to: {formatted_phone_number}""", context)
 
         if update.message.from_user.id == BELOVED_USER_ID:
             update.message.reply_text('❤')
+        elif update.message.from_user.id in PAST_BELOVED_USER_IDS:
+            update.message.reply_text('🤍')
+            
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
