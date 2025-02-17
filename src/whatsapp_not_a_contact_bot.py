@@ -1,6 +1,7 @@
 import logging
 import os
 from logging.handlers import RotatingFileHandler
+from time import sleep
 
 from telegram import ChatAction, Update
 from telegram.ext import (CallbackContext, CommandHandler, Filters,
@@ -52,7 +53,8 @@ Formatted to: {formatted_phone_number}""", context)
         if update.message.from_user.id == BELOVED_USER_ID:
             update.message.reply_text('❤')
         elif update.message.from_user.id in PAST_BELOVED_USER_IDS:
-            update.message.reply_text('🤍')
+            sleep(3)
+            update.message.reply_text('‏🤍')
             
 
 def start(update: Update, context: CallbackContext) -> None:
